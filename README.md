@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img alt="Fastfeet" title="Fastfeet" src=".https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-02/master/.github/logo.png" width="300px" /></a>
+ <img alt="Fastfeet" title="Fastfeet" src="https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-02/master/.github/logo.png" width="300px" /></a>
 </p>
 
 <h3 align="center">Desafio 02: FastFett, o início</h3>
@@ -79,7 +79,7 @@ Para criar um seed utilize o comando:
 O comando irá criar o seguinte usuário no banco de dados:
 `{ name: "Distribuidora FastFeet", email: "admin@fastfeet.com", password_hash: bcrypt.hashSync("123456", 8), created_at: new Date(), updated_at: new Date() }`
 
-## Agora você tem um usuário na sua base de dados, utilize esse usuário para todos os logins que você fizer.
+Agora você tem um usuário na sua base de dados, utilize esse usuário para todos os logins que você fizer.
 
 ### CRUD de destinatário
 
