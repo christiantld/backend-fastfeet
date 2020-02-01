@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img alt="Fastfeet" title="Fastfeet" src=".github/logo.png" width="300px" /></a>
+ <img alt="Fastfeet" title="Fastfeet" src=".https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-02/master/.github/logo.png" width="300px" /></a>
 </p>
 
 <h3 align="center">Desafio 02: FastFett, o início</h3>
