@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
-import Recipients from '../models/Recipients';
+import Recipient from '../models/Recipient';
 
-class RecipientsController {
+class RecipientController {
   // Create
   async store(req, res) {
     // Validation of the req.body fields
@@ -28,7 +28,7 @@ class RecipientsController {
     }
 
     // zip_code is unique in the DB. Checks zip_code
-    const RecipientExists = await Recipients.findOne({
+    const RecipientExists = await Recipient.findOne({
       where: {
         zip_code: req.body.zip_code,
       },
@@ -49,7 +49,7 @@ class RecipientsController {
       city,
       state,
       zip_code,
-    } = await Recipients.create(req.body);
+    } = await Recipient.create(req.body);
 
     return res.json({
       id,
@@ -67,7 +67,7 @@ class RecipientsController {
   async update(req, res) {
     // Validation of the req.body fields
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
+      name: Yup.string(),
       street: Yup.string().required(),
       number: Yup.number().required(),
       complement: Yup.string(),
@@ -86,7 +86,7 @@ class RecipientsController {
     const { zip_code } = req.body;
 
     // Checks if the id provided exists in the DB
-    const recipient = await Recipients.findByPk(id);
+    const recipient = await Recipient.findByPk(id);
     if (!recipient) {
       return res.status(401).json({
         error: 'Recipient does not exists',
@@ -117,15 +117,14 @@ class RecipientsController {
   // Read All
   async index(req, res) {
     // List of all recipients
-    const recipients = await Recipients.findAll();
+    const recipients = await Recipient.findAll();
     return res.json(recipients);
   }
 
   // Read one by id
   async show(req, res) {
     const { id } = req.params;
-
-    const recipient = await Recipients.findByPk(id);
+    const recipient = await Recipient.findByPk(id);
 
     if (!recipient) {
       return res.status(401).json({
@@ -140,7 +139,7 @@ class RecipientsController {
   async delete(req, res) {
     const { id } = req.params;
 
-    const recipient = await Recipients.findByPk(id);
+    const recipient = await Recipient.findByPk(id);
 
     if (!recipient) {
       return res.status(401).json({
@@ -156,4 +155,4 @@ class RecipientsController {
   }
 }
 
-export default new RecipientsController();
+export default new RecipientController();
