@@ -13,6 +13,8 @@ import UserController from './app/controllers/UserController';
 import OrderController from './app/controllers/OrderController';
 import NotificationController from './app/controllers/NotificationController';
 import DeliveryProblemController from './app/controllers/DeliveryProblemController';
+import DeliveryEndController from './app/controllers/DeliveryEndController';
+import DeliveryStartController from './app/controllers/DeliveryStartController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -20,6 +22,23 @@ const upload = multer(multerConfig);
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
+// List Open Deliveries
+routes.get('/deliveryman/:id/open-deliveries', DeliveryStartController.show);
+
+// List Fisinhed Deliveries
+routes.get('/deliveryman/:id/closed-deliveries', DeliveryEndController.show);
+
+// Start Delivery
+routes.put(
+  '/deliveryman/:id/start-delivery/:delId',
+  DeliveryStartController.update
+);
+
+// End Delivery
+routes.put(
+  '/deliveryman/:id/end-delivery/:delId',
+  DeliveryEndController.update
+);
 // Delivery problems
 routes.get('/delivery/problems', DeliveryProblemController.show);
 routes.get('/delivery/:id/problems', DeliveryProblemController.index);

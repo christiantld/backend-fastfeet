@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { parseISO, isBefore } from 'date-fns';
 import DeliveryProblem from '../models/DeliveryProblem';
 import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
@@ -94,6 +95,13 @@ class DeliveryProblemsController {
 
   async update(req, res) {
     const { id } = req.params;
+    const canceledAt = parseISO(req.body.canceled_at);
+
+    if (isBefore(canceledAt, new Date())) {
+      return res.status(400).json({
+        error: 'Past dates are not permitted',
+      });
+    }
 
     const deliveryProblem = await DeliveryProblem.findByPk(id);
 
@@ -103,35 +111,44 @@ class DeliveryProblemsController {
       });
     }
 
-    const order = await Order.findByPk(deliveryProblem.order_id, {
-      include: [
-        {
-          model: Deliveryman,
-          as: 'deliveryman',
-          attributes: ['id', 'name', 'email'],
-        },
-        {
-          model: Recipient,
-          as: 'recipient',
-          attributes: ['name', 'zip_code'],
-        },
-      ],
-    });
-
-    if (order.end_date !== null && order.signature_id !== null) {
-      return res.status(400).json('Delivery accomplished');
-    }
-
-    order.update(
-      {
-        canceled_at: new Date(),
-      },
+    const order = await Order.findOne(
       {
         where: {
           id: deliveryProblem.order_id,
+          canceled_at: null,
         },
+      },
+      {
+        include: [
+          {
+            model: Deliveryman,
+            as: 'deliveryman',
+            attributes: ['id', 'name', 'email'],
+          },
+          {
+            model: Recipient,
+            as: 'recipient',
+            attributes: ['name', 'zip_code'],
+          },
+        ],
       }
     );
+
+    if (!order) {
+      return res.status(400).json({
+        error: 'Delivery does not exists or already canceled',
+      });
+    }
+
+    if (order.end_date !== null && order.signature_id !== null) {
+      return res.status(400).json({
+        error: 'Delivery accomplished',
+      });
+    }
+
+    order.update({
+      canceled_at: canceledAt,
+    });
 
     await Queue.add(CancellationMail.key, {
       deliveryman: order.deliveryman,
