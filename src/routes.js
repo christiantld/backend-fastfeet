@@ -25,7 +25,7 @@ routes.post('/sessions', SessionController.store);
 // List Open Deliveries
 routes.get('/deliveryman/:id/open-deliveries', DeliveryStartController.show);
 
-// List Fisinhed Deliveries
+// List Finished Deliveries
 routes.get('/deliveryman/:id/closed-deliveries', DeliveryEndController.show);
 
 // Start Delivery
