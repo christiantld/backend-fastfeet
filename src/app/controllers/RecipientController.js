@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import Recipient from '../models/Recipient';
+import File from '../models/File';
 
 class RecipientController {
   // Create
@@ -117,7 +118,15 @@ class RecipientController {
   // Read All
   async index(req, res) {
     // List of all recipients
-    const recipients = await Recipient.findAll();
+    const recipients = await Recipient.findAll({
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
+    });
     return res.json(recipients);
   }
 
