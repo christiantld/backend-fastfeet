@@ -3,7 +3,7 @@
  <img alt="Fastfeet" title="Fastfeet" src="https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-02/master/.github/logo.png" width="300px" /></a>
 </p>
 
-<h3 align="center">Desafio 02: FastFett, o início</h3>
+<h3 align="center">Desafio 02: FastFeet, o início</h3>
 
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/rocketseat/bootcamp-gostack-desafio-01?color=%2304D361">
