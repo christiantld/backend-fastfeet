@@ -6,7 +6,8 @@ node_modules
 .DS_Store
 ._
 .env
-.jpg
+*.jpg
+*.png
 
 
 npm-debug.log*
